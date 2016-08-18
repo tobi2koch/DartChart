@@ -268,6 +268,7 @@
             this.btnStandBerechnen.Text = "GO";
             this.btnStandBerechnen.UseVisualStyleBackColor = false;
             this.btnStandBerechnen.Click += new System.EventHandler(this.btnStandBerechnen_Click);
+            this.btnStandBerechnen.Leave += new System.EventHandler(this.inputVerlassen_Leave);
             // 
             // txtWurf1
             // 

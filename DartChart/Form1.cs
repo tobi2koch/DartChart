@@ -14,10 +14,14 @@ namespace DartChart
     {
         // array spieler anlegen
         Label[] arrPlayer = new Label[8];
+        // array punkte anlegen
         Label[] arrPunkte = new Label[8];
+        // vars fürs aktuelle Spiel
         int anzPlayer = 0;
         int aktiverSpieler = 0;
         int durchgang;
+        bool isDouble = false;
+        bool isTriple = false;
 
         public punktestand()
         {
@@ -36,7 +40,7 @@ namespace DartChart
 
             int posX = 0;
             int posY = 6;
-            int punkteModus = 301;
+            int punkteModus = Settings.mode501;
             int punkteStart = punkteModus;
 
             Label lbl;
@@ -100,46 +104,28 @@ namespace DartChart
         private void btnStandBerechnen_Click(object sender, EventArgs e)
         {
             durchgang++;
+            isDouble = false;
+            isTriple = false;
             lblDurchgang.Text = "Durchgang " + (durchgang / anzPlayer);
 
             int punkteErzielt = 0;
 
             int spielerPunkte = Convert.ToInt32(arrPunkte[aktiverSpieler].Text);
-
             int w1 = eingabePruefen(txtWurf1.Text);
+            if (isTriple == true)
+                MessageBox.Show("TRIPLE!");
+                
             int w2 = eingabePruefen(txtWurf2.Text);
             int w3 = eingabePruefen(txtWurf3.Text);
 
             // unmögliche eingabe , auf rückgabewert -1 prüfen
-            if (w1 == -1)
+            if (w1 == -1 || w2 == -1 || w3 == -1)
             {
-                w1 = 0;
+                //w1 = 0;
                 txtWurf1.Focus();
             }
-            if (w2 == -1)
-            {
-                w2 = 0;
-                txtWurf2.Focus();
-            }
-            if (w3 == -1)
-            {
-                w2 = 0;
-                txtWurf3.Focus();
-            }
-
-            // Würfe einzeln prüfen
-            if (w1 > spielerPunkte)
-            {
+            else if (w1 > spielerPunkte || w2 > spielerPunkte || w3 > spielerPunkte)
                 punkteErzielt = 0;
-            }
-            else if ((w1 + w2) > spielerPunkte)
-            {
-                punkteErzielt = 0;
-            }
-            else if ((w1 + w2 + w3) > spielerPunkte)
-            {
-                punkteErzielt = 0;
-            }
             else
                 punkteErzielt = w1 + w2 + w3;
 
@@ -152,7 +138,7 @@ namespace DartChart
             else
                 MessageBox.Show("Zuviel");
 
-
+            // nach runde wieder zum ersten Spieler
             if (aktiverSpieler == anzPlayer - 1)
             {
                 aktiverSpieler = 0;
@@ -177,7 +163,7 @@ namespace DartChart
             TextBox txt;
             txt = (TextBox)sender;
             txt.SelectAll();
-            
+
             arrPlayer[aktiverSpieler].BackColor = System.Drawing.Color.Salmon;
             arrPlayer[aktiverSpieler].ForeColor = System.Drawing.Color.White;
         }
@@ -209,18 +195,20 @@ namespace DartChart
                 s = s.Trim();
                 if (s.Contains('d'))
                 {
+                    isDouble = true;
                     s = s.Replace("d", "");
                     wurf = (Convert.ToInt32(s)) * 2;
                 }
                 else if (s.Contains('t'))
                 {
+                    isTriple = true;
                     s = s.Replace("t", "");
                     wurf = (Convert.ToInt32(s)) * 3;
                 }
                 else
                     wurf = (Convert.ToInt32(s));
                 btnStandBerechnen.Enabled = true;
-                if (wurf < 60)
+                if (wurf <= 60)
                 {
                     return wurf;
                 }
