@@ -1,0 +1,9 @@
+D:\C#\DartChart\DartChart\bin\Debug\DartChart.exe.config
+D:\C#\DartChart\DartChart\bin\Debug\DartChart.exe
+D:\C#\DartChart\DartChart\bin\Debug\DartChart.pdb
+D:\C#\DartChart\DartChart\obj\Debug\DartChart.csprojResolveAssemblyReference.cache
+D:\C#\DartChart\DartChart\obj\Debug\DartChart.Properties.Resources.resources
+D:\C#\DartChart\DartChart\obj\Debug\DartChart.csproj.GenerateResource.Cache
+D:\C#\DartChart\DartChart\obj\Debug\DartChart.exe
+D:\C#\DartChart\DartChart\obj\Debug\DartChart.pdb
+D:\C#\DartChart\DartChart\obj\Debug\DartChart.punktestand.resources
