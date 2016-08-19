@@ -23,6 +23,8 @@ namespace DartChart
         bool isDouble = false;
         bool isTriple = false;
         bool wurfIsValid = false;
+        int punkteModus;
+
 
         public punktestand()
         {
@@ -35,13 +37,39 @@ namespace DartChart
         }
 
 
+        // einstellungen Laden
+        private void punktestand_Load(object sender, EventArgs e)
+        {
+            punkteModus = Settings.mode301;
+            lblSpielmodus.Text = Convert.ToString(punkteModus);
+        }
+
+        private void einstellungenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            einstellungen einstellungen = new einstellungen();
+            einstellungen.ShowDialog();
+
+        }
+
+        private void toolStripMenuItem2_Click(object sender, EventArgs e)
+        {
+            punkteModus = Settings.mode301;
+            lblSpielmodus.Text = Convert.ToString(punkteModus);
+        }
+
+        private void toolStripMenuItem3_Click(object sender, EventArgs e)
+        {
+            punkteModus = Settings.mode501;
+            lblSpielmodus.Text = Convert.ToString(punkteModus);
+        }
+
+
         // Spieler Labels erzeugen
         private void btnAnzSpieler_Click(object sender, EventArgs e)
         {
 
             int posX = 0;
             int posY = 6;
-            int punkteModus = Settings.mode301;
             int punkteStart = punkteModus;
 
             Label lbl;
@@ -71,6 +99,8 @@ namespace DartChart
                 // Punktestand erzeugen
                 lblPunkte = new Label();
                 lblPunkte.Size = lblVorlagePunkte.Size;
+                lblPunkte.Anchor = lblVorlagePunkte.Anchor;
+                lblPunkte.MinimumSize = lblVorlagePunkte.MinimumSize;
                 lblPunkte.TextAlign = lblVorlagePunkte.TextAlign;
                 lblPunkte.BackColor = lblVorlagePunkte.BackColor;
                 lblPunkte.ForeColor = lblVorlagePunkte.ForeColor;
@@ -108,7 +138,7 @@ namespace DartChart
             durchgang++;
             isDouble = false;
             isTriple = false;
-            lblDurchgang.Text = "Durchgang " + (durchgang / anzPlayer);
+            lblDurchgang.Text = "RUNDE " + (durchgang / anzPlayer+1);
 
             int punkteErzielt = 0;
 
@@ -119,12 +149,23 @@ namespace DartChart
             int w3 = eingabePruefen(txtWurf3.Text);
 
             // unmögliche eingabe , auf rückgabewert -1 prüfen
-            if (w1 == -1)
+            if (w1 < 0)
             {
                 txtWurf1.Focus();
                 inputBetreten_Enter(txtWurf1, null);
                 return;
-
+            }
+            if (w2 < 0)
+            {
+                txtWurf2.Focus();
+                inputBetreten_Enter(txtWurf2, null);
+                return;
+            }
+            if (w3 < 0)
+            {
+                txtWurf3.Focus();
+                inputBetreten_Enter(txtWurf3, null);
+                return;
             }
 
             //|| w2 == -1 || w3 == -1)
@@ -229,6 +270,7 @@ namespace DartChart
                 else
                     wurf = zahlenbereichPruefen(s);
                 btnStandBerechnen.Enabled = true;
+
                 if (wurf <= 60)
                 {
                     return wurf;
@@ -245,22 +287,19 @@ namespace DartChart
         private int zahlenbereichPruefen(String s)
         {
             int wurf;
+            int ergebnis;
+            if (!(int.TryParse(s, out ergebnis)))
+                return -1;
             wurf = (Convert.ToInt32(s));
-            if (wurf < 0 || wurf > 20)
+            if (wurf == 25)
+            {
+                return wurf = 25;
+            }
+            else if (wurf == 50)
+                return wurf = 50;
+            else if (wurf < 0 || wurf > 20)
                 return -1;
             return wurf;
-        }
-
-
-        // einstellungen Laden
-        private void punktestand_Load(object sender, EventArgs e)
-        {
-            lblSpielmodus.Text = Settings.spielmodus[1];
-        }
-
-        private void einstellungenToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-
         }
     }
 }

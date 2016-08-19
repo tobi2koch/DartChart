@@ -16,5 +16,10 @@ namespace DartChart
         {
             InitializeComponent();
         }
+
+        private void einstellungen_Load(object sender, EventArgs e)
+        {
+
+        }
     }
 }
