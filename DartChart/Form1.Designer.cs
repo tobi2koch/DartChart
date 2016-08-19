@@ -54,6 +54,7 @@
             this.grpPlayer = new System.Windows.Forms.FlowLayoutPanel();
             this.lblVorlageSpieler = new System.Windows.Forms.Label();
             this.grpInfo = new System.Windows.Forms.Panel();
+            this.lblSpielmodus = new System.Windows.Forms.Label();
             this.lblDurchgang = new System.Windows.Forms.Label();
             this.lblGameMode = new System.Windows.Forms.Label();
             this.btnAnzSpieler = new System.Windows.Forms.Button();
@@ -133,6 +134,7 @@
             this.einstellungenToolStripMenuItem.Name = "einstellungenToolStripMenuItem";
             this.einstellungenToolStripMenuItem.Size = new System.Drawing.Size(145, 22);
             this.einstellungenToolStripMenuItem.Text = "&Einstellungen";
+            this.einstellungenToolStripMenuItem.Click += new System.EventHandler(this.einstellungenToolStripMenuItem_Click);
             // 
             // toolStripSeparator1
             // 
@@ -352,6 +354,7 @@
             // grpInfo
             // 
             this.grpInfo.BackColor = System.Drawing.Color.Black;
+            this.grpInfo.Controls.Add(this.lblSpielmodus);
             this.grpInfo.Controls.Add(this.lblDurchgang);
             this.grpInfo.Controls.Add(this.lblGameMode);
             this.grpInfo.Controls.Add(this.btnAnzSpieler);
@@ -363,12 +366,22 @@
             this.grpInfo.Size = new System.Drawing.Size(784, 81);
             this.grpInfo.TabIndex = 9;
             // 
+            // lblSpielmodus
+            // 
+            this.lblSpielmodus.BackColor = System.Drawing.Color.Black;
+            this.lblSpielmodus.Font = new System.Drawing.Font("Franklin Gothic Medium", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lblSpielmodus.ForeColor = System.Drawing.Color.AliceBlue;
+            this.lblSpielmodus.Location = new System.Drawing.Point(370, 10);
+            this.lblSpielmodus.Name = "lblSpielmodus";
+            this.lblSpielmodus.Size = new System.Drawing.Size(127, 26);
+            this.lblSpielmodus.TabIndex = 14;
+            // 
             // lblDurchgang
             // 
             this.lblDurchgang.AutoSize = true;
             this.lblDurchgang.Font = new System.Drawing.Font("Franklin Gothic Medium", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblDurchgang.ForeColor = System.Drawing.Color.AliceBlue;
-            this.lblDurchgang.Location = new System.Drawing.Point(550, 13);
+            this.lblDurchgang.Location = new System.Drawing.Point(550, 10);
             this.lblDurchgang.Name = "lblDurchgang";
             this.lblDurchgang.Size = new System.Drawing.Size(109, 26);
             this.lblDurchgang.TabIndex = 13;
@@ -379,7 +392,7 @@
             this.lblGameMode.AutoSize = true;
             this.lblGameMode.Font = new System.Drawing.Font("Franklin Gothic Medium", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblGameMode.ForeColor = System.Drawing.Color.AliceBlue;
-            this.lblGameMode.Location = new System.Drawing.Point(262, 13);
+            this.lblGameMode.Location = new System.Drawing.Point(240, 10);
             this.lblGameMode.Name = "lblGameMode";
             this.lblGameMode.Size = new System.Drawing.Size(127, 26);
             this.lblGameMode.TabIndex = 12;
@@ -406,7 +419,7 @@
             this.lblAnzahlSpieler.AutoSize = true;
             this.lblAnzahlSpieler.Font = new System.Drawing.Font("Franklin Gothic Medium", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lblAnzahlSpieler.ForeColor = System.Drawing.Color.AliceBlue;
-            this.lblAnzahlSpieler.Location = new System.Drawing.Point(-1, 13);
+            this.lblAnzahlSpieler.Location = new System.Drawing.Point(0, 10);
             this.lblAnzahlSpieler.Name = "lblAnzahlSpieler";
             this.lblAnzahlSpieler.Size = new System.Drawing.Size(139, 26);
             this.lblAnzahlSpieler.TabIndex = 9;
@@ -458,6 +471,7 @@
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Punktestand";
+            this.Load += new System.EventHandler(this.punktestand_Load);
             this.menu.ResumeLayout(false);
             this.menu.PerformLayout();
             this.toolStripContainer1.ContentPanel.ResumeLayout(false);
@@ -512,6 +526,7 @@
         private System.Windows.Forms.TextBox txtWurf1;
         private System.Windows.Forms.TextBox txtWurf3;
         private System.Windows.Forms.TextBox txtWurf2;
+        private System.Windows.Forms.Label lblSpielmodus;
     }
 }
 

@@ -7,3 +7,4 @@ D:\C#\DartChart\DartChart\obj\Debug\DartChart.csproj.GenerateResource.Cache
 D:\C#\DartChart\DartChart\obj\Debug\DartChart.exe
 D:\C#\DartChart\DartChart\obj\Debug\DartChart.pdb
 D:\C#\DartChart\DartChart\obj\Debug\DartChart.punktestand.resources
+D:\C#\DartChart\DartChart\obj\Debug\DartChart.einstellungen.resources

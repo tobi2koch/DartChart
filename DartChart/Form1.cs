@@ -22,6 +22,7 @@ namespace DartChart
         int durchgang;
         bool isDouble = false;
         bool isTriple = false;
+        bool wurfIsValid = false;
 
         public punktestand()
         {
@@ -40,7 +41,7 @@ namespace DartChart
 
             int posX = 0;
             int posY = 6;
-            int punkteModus = Settings.mode501;
+            int punkteModus = Settings.mode301;
             int punkteStart = punkteModus;
 
             Label lbl;
@@ -103,6 +104,7 @@ namespace DartChart
         // PUNKTE AUSRECHNEN
         private void btnStandBerechnen_Click(object sender, EventArgs e)
         {
+            wurfIsValid = true;
             durchgang++;
             isDouble = false;
             isTriple = false;
@@ -111,51 +113,71 @@ namespace DartChart
             int punkteErzielt = 0;
 
             int spielerPunkte = Convert.ToInt32(arrPunkte[aktiverSpieler].Text);
+
             int w1 = eingabePruefen(txtWurf1.Text);
-            if (isTriple == true)
-                MessageBox.Show("TRIPLE!");
-                
             int w2 = eingabePruefen(txtWurf2.Text);
             int w3 = eingabePruefen(txtWurf3.Text);
 
             // unmögliche eingabe , auf rückgabewert -1 prüfen
-            if (w1 == -1 || w2 == -1 || w3 == -1)
+            if (w1 == -1)
             {
-                //w1 = 0;
                 txtWurf1.Focus();
+                inputBetreten_Enter(txtWurf1, null);
+                return;
+
             }
-            else if (w1 > spielerPunkte || w2 > spielerPunkte || w3 > spielerPunkte)
-                punkteErzielt = 0;
-            else
-                punkteErzielt = w1 + w2 + w3;
+
+            //|| w2 == -1 || w3 == -1)
+            punkteErzielt = w1 + w2 + w3;
+
+            if (punkteErzielt > spielerPunkte)
+                return;
+
 
             // Ziel Punktestan prüfen
-            if (!(punkteErzielt > spielerPunkte))
+
+            if (wurfIsValid == true)
             {
-                spielerPunkte -= punkteErzielt;
-                arrPunkte[aktiverSpieler].Text = Convert.ToString(spielerPunkte);
+                if (punkteErzielt > spielerPunkte)
+                {
+
+                }
+                else if (punkteErzielt == spielerPunkte)
+                {
+                    MessageBox.Show("Spieler " + arrPlayer[aktiverSpieler] + "gewinnt.");
+                    spielerPunkte -= punkteErzielt;
+                    arrPunkte[aktiverSpieler].Text = Convert.ToString(spielerPunkte);
+                }
+
+                else
+                {
+                    spielerPunkte -= punkteErzielt;
+                    arrPunkte[aktiverSpieler].Text = Convert.ToString(spielerPunkte);
+                }
+
+                // nach runde wieder zum ersten Spieler
+                if (aktiverSpieler == anzPlayer - 1)
+                {
+                    aktiverSpieler = 0;
+                    grpEingabe.Top = 0;
+                    txtWurf1.Text = "";
+                    txtWurf2.Text = "";
+                    txtWurf3.Text = "";
+                }
+                else
+                {
+                    aktiverSpieler++;
+                    //Felder Leeren
+                    txtWurf1.Text = "";
+                    txtWurf2.Text = "";
+                    txtWurf3.Text = "";
+
+                    // eingabe feld verschieben
+                    grpEingabe.Top = grpEingabe.Location.Y + (lblVorlagePunkte.Height + 12);
+                }
             }
             else
-                MessageBox.Show("Zuviel");
-
-            // nach runde wieder zum ersten Spieler
-            if (aktiverSpieler == anzPlayer - 1)
-            {
-                aktiverSpieler = 0;
-                grpEingabe.Top = 0;
-            }
-            else
-            {
-                aktiverSpieler++;
-
-                //Felder Leeren
-                txtWurf1.Text = "";
-                txtWurf2.Text = "";
-                txtWurf3.Text = "";
-
-                // eingabe feld verschieben
-                grpEingabe.Top = grpEingabe.Location.Y + (lblVorlagePunkte.Height + 12);
-            }
+                return;
         }
         // Aktiven Spieler hervorheben
         private void inputBetreten_Enter(object sender, EventArgs e)
@@ -163,7 +185,6 @@ namespace DartChart
             TextBox txt;
             txt = (TextBox)sender;
             txt.SelectAll();
-
             arrPlayer[aktiverSpieler].BackColor = System.Drawing.Color.Salmon;
             arrPlayer[aktiverSpieler].ForeColor = System.Drawing.Color.White;
         }
@@ -197,29 +218,49 @@ namespace DartChart
                 {
                     isDouble = true;
                     s = s.Replace("d", "");
-                    wurf = (Convert.ToInt32(s)) * 2;
+                    wurf = zahlenbereichPruefen(s) * 2;
                 }
                 else if (s.Contains('t'))
                 {
                     isTriple = true;
                     s = s.Replace("t", "");
-                    wurf = (Convert.ToInt32(s)) * 3;
+                    wurf = zahlenbereichPruefen(s) * 3;
                 }
                 else
-                    wurf = (Convert.ToInt32(s));
+                    wurf = zahlenbereichPruefen(s);
                 btnStandBerechnen.Enabled = true;
                 if (wurf <= 60)
                 {
                     return wurf;
                 }
                 else
-                    return wurf = -1;
+                    return -1;
             }
             else
             {
                 //btnStandBerechnen.Enabled = false;
                 return wurf = 0;
             }
+        }
+        private int zahlenbereichPruefen(String s)
+        {
+            int wurf;
+            wurf = (Convert.ToInt32(s));
+            if (wurf < 0 || wurf > 20)
+                return -1;
+            return wurf;
+        }
+
+
+        // einstellungen Laden
+        private void punktestand_Load(object sender, EventArgs e)
+        {
+            lblSpielmodus.Text = Settings.spielmodus[1];
+        }
+
+        private void einstellungenToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }
